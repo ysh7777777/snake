@@ -1,0 +1,28 @@
+* {
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+}
+#myCanvas {
+  border: 2px solid blue;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#myScore,
+#myScore2 {
+  font-size: 2rem;
+  color: white;
+  margin-top: 1rem;
+}
+#Start {
+  font-size: 2rem;
+  background-color: yellow;
+}
