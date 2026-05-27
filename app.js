@@ -45,7 +45,9 @@ document.addEventListener("keydown", changeDirection);
 let d = "Right";
 function changeDirection(e) {
   // console.log(e.key);
-
+  if (e.key == " ") {
+    toggleGame();
+  }
   if (e.key == "ArrowUp" && d != "Down") {
     d = "Up";
   } else if (e.key == "ArrowDown" && d != "Up") {
@@ -56,7 +58,7 @@ function changeDirection(e) {
     d = "Right";
   }
 }
-
+//分數
 let score = 0;
 let highestScore = Number(localStorage.getItem("highestScore")) || 0;
 document.getElementById("myScore").innerHTML = "分數:" + score;
@@ -134,9 +136,45 @@ function draw() {
     if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
       clearInterval(myGame);
       alert("game over");
+      resetGame();
       return;
     }
   }
 }
 
-let myGame = setInterval(draw, 100);
+// let myGame = setInterval(draw, 100);
+let isPaused = true;
+let myGame;
+function toggleGame() {
+  if (isPaused == true) {
+    myGame = setInterval(draw, 100);
+  } else {
+    clearInterval(myGame);
+  }
+  isPaused = !isPaused;
+}
+function resetGame() {
+  snake = [];
+  snake[0] = {
+    x: 80,
+    y: 0,
+  };
+  snake[1] = {
+    x: 60,
+    y: 0,
+  };
+  snake[2] = {
+    x: 40,
+    y: 0,
+  };
+  snake[3] = {
+    x: 20,
+    y: 0,
+  };
+  score = 0;
+  d = "Right";
+  myFood.pickALocation();
+  isPaused = true;
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
