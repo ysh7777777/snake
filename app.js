@@ -31,6 +31,20 @@ class Food {
   pickALocation() {
     this.x = Math.floor(Math.random() * column) * unit;
     this.y = Math.floor(Math.random() * row) * unit;
+    //讓食物生成不會出現在蛇上
+    let collision = false;
+    do {
+      this.x = Math.floor(Math.random() * column) * unit;
+      this.y = Math.floor(Math.random() * row) * unit;
+
+      collision = false;
+      for (let i = 0; i < snake.length; i++) {
+        if (this.x == snake[i].x && this.y == snake[i].y) {
+          collision = true;
+          break;
+        }
+      }
+    } while (collision);
   }
 
   //畫食物
@@ -39,21 +53,6 @@ class Food {
     ctx.fillRect(this.x, this.y, unit, unit);
   }
 }
-
-//讓食物生成不會出現在蛇上
-let collision = false;
-do {
-  this.x = Math.floor(Math.random() * column) * unit;
-  this.y = Math.floor(Math.random() * row) * unit;
-
-  collision = false;
-  for (let i = 0; i < snake.length; i++) {
-    if (this.x == snake[i].x && this.y == snake[i].y) {
-      collision = true;
-      break;
-    }
-  }
-} while (collision);
 
 let myFood = new Food();
 //方向
