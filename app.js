@@ -39,23 +39,47 @@ class Food {
     ctx.fillRect(this.x, this.y, unit, unit);
   }
 }
+
+//讓食物生成不會出現在蛇上
+let collision = false;
+do {
+  this.x = Math.floor(Math.random() * column) * unit;
+  this.y = Math.floor(Math.random() * row) * unit;
+
+  collision = false;
+  for (let i = 0; i < snake.length; i++) {
+    if (this.x == snake[i].x && this.y == snake[i].y) {
+      collision = true;
+      break;
+    }
+  }
+} while (collision);
+
 let myFood = new Food();
 //方向
 document.addEventListener("keydown", changeDirection);
 let d = "Right";
+//鎖定方向等完整跑完程式再放開
+let canMove = true;
+
 function changeDirection(e) {
   // console.log(e.key);
+
   if (e.key == " ") {
     toggleGame();
   }
-  if (e.key == "ArrowUp" && d != "Down") {
+  if (e.key == "ArrowUp" && d != "Down" && canMove == true) {
     d = "Up";
-  } else if (e.key == "ArrowDown" && d != "Up") {
+    canMove = !canMove;
+  } else if (e.key == "ArrowDown" && d != "Up" && canMove == true) {
     d = "Down";
-  } else if (e.key == "ArrowLeft" && d != "Right") {
+    canMove = !canMove;
+  } else if (e.key == "ArrowLeft" && d != "Right" && canMove == true) {
     d = "Left";
-  } else if (e.key == "ArrowRight" && d != "Left") {
+    canMove = !canMove;
+  } else if (e.key == "ArrowRight" && d != "Left" && canMove == true) {
     d = "Right";
+    canMove = !canMove;
   }
 }
 //分數
@@ -140,9 +164,11 @@ function draw() {
       return;
     }
   }
+  canMove = true;
 }
 
 // let myGame = setInterval(draw, 100);
+//暫停
 let isPaused = true;
 let myGame;
 function toggleGame() {
@@ -153,6 +179,8 @@ function toggleGame() {
   }
   isPaused = !isPaused;
 }
+
+//重製遊戲基本數值
 function resetGame() {
   snake = [];
   snake[0] = {
