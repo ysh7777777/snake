@@ -29,8 +29,8 @@ class Food {
     this.pickALocation();
   }
   pickALocation() {
-    this.x = Math.floor(Math.random() * column) * unit;
-    this.y = Math.floor(Math.random() * row) * unit;
+    // this.x = Math.floor(Math.random() * column) * unit;
+    // this.y = Math.floor(Math.random() * row) * unit;
     //讓食物生成不會出現在蛇上
     let collision = false;
     do {
@@ -158,7 +158,7 @@ function draw() {
   for (let i = 1; i < snake.length; i++) {
     if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
       clearInterval(myGame);
-      alert("game over");
+      setTimeout(alert, 100, "game over");
       resetGame();
       return;
     }
@@ -181,6 +181,7 @@ function toggleGame() {
 
 //重製遊戲基本數值
 function resetGame() {
+  clearInterval(myGame);
   snake = [];
   snake[0] = {
     x: 80,
@@ -204,4 +205,7 @@ function resetGame() {
   isPaused = true;
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  drawSnake();
+  myFood.drawFood();
 }
